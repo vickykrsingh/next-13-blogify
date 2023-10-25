@@ -3,8 +3,8 @@ import { likePost } from '@/utils/actions/actions'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { MdComment } from 'react-icons/md'
 interface IParams {
-    likes: string[],
-    comments: string[],
+    likes: string,
+    comments: string,
     dbUserId: string,
     postId: string,
 }
@@ -13,6 +13,10 @@ function PostFooter(params: IParams) {
     const handleLikePost = async (userId: string, postId: string) => {
         await likePost(userId, postId)
     }
+    params.likes=JSON.parse(params.likes)
+    params.comments=JSON.parse(params.comments)
+    params.dbUserId=JSON.parse(params.dbUserId)
+    params.postId=JSON.parse(params.postId)
     return (
         <footer className='w-full flex items-center justify-start p-1 gap-2 text-xl'>
             <div className='text-2xl px-2 cursor-pointer flex items-center justify-center gap-2 hover:scale-105 duration-75' onClick={() => handleLikePost(params.dbUserId, params.postId)} >

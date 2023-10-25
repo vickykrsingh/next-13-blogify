@@ -40,7 +40,7 @@ async function Post(props: Props) {
                                     <p className='text-xs'>{item.description}</p>
                                 </div>
                                 {
-                                    props.dbUser.clerkUserId == item.author.clerkUserId &&
+                                    props?.dbUser?.clerkUserId == item?.author?.clerkUserId &&
                                     <HandlePostButton id={JSON.stringify(item?._id)} image={item?.image} />
                                 }
                             </section>
@@ -48,7 +48,7 @@ async function Post(props: Props) {
                         {
                             item?.image && <Image src={item.image} alt='post_image' priority height={800} width={800} className='rounded-lg' />
                         }
-                        <PostFooter likes={item.likes} comments={item.comments} dbUserId={props.dbUser._id} postId={item._id} />
+                        <PostFooter likes={JSON.stringify(item?.likes)} comments={JSON.stringify(item?.comments)} dbUserId={JSON.stringify(props?.dbUser?._id)} postId={JSON.stringify(item?._id)} />
                     </section>
                 </section>
             </section>

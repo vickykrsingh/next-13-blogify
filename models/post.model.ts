@@ -1,6 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Schema,InferSchemaType, Document } from "mongoose";
 
-const postSchema = new mongoose.Schema(
+export interface IPostSchema extends Document {
+  title:string,
+  description:string,
+  image:string,
+  likes:string[],
+  comments:string[],
+  author:string[]
+}
+
+const postSchema:Schema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -29,8 +38,8 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  // { timestamps: true }
 );
 
-const postModel = mongoose.models.Posts || mongoose.model("Posts", postSchema);
+const postModel = mongoose.models.Posts || mongoose.model<IPostSchema>("Posts", postSchema);
 export default postModel;
