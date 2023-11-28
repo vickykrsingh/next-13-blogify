@@ -24,6 +24,7 @@ export default async function Home() {
   return (
     <div className='container'>
       <Post postData={post} dbUser={dbUser} />
+      
     </div>
   )
 }

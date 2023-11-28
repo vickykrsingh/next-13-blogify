@@ -46,13 +46,13 @@ const userSchema = new mongoose.Schema<IUserModel>(
     ],
     followers: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
       },
     ],
     following: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
       },
     ],

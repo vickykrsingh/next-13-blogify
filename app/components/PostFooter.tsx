@@ -10,13 +10,14 @@ interface IParams {
 }
 
 function PostFooter(params: IParams) {
+    console.log(params)
     const handleLikePost = async (userId: string, postId: string) => {
         await likePost(userId, postId)
     }
-    params.likes=JSON.parse(params.likes)
-    params.comments=JSON.parse(params.comments)
-    params.dbUserId=JSON.parse(params.dbUserId)
-    params.postId=JSON.parse(params.postId)
+    params.likes= params.likes && JSON.parse(params?.likes) || null
+    params.comments=params.comments &&  JSON.parse(params?.comments) || null
+    params.dbUserId=params.dbUserId && JSON.parse(params?.dbUserId) || null
+    params.postId=params.postId && JSON.parse(params?.postId) || null
     return (
         <footer className='w-full flex items-center justify-start p-1 gap-2 text-xl'>
             <div className='text-2xl px-2 cursor-pointer flex items-center justify-center gap-2 hover:scale-105 duration-75' onClick={() => handleLikePost(params.dbUserId, params.postId)} >

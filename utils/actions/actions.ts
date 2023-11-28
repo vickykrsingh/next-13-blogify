@@ -4,7 +4,7 @@ import dbConnect from "../dbConnect";
 import { currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { IPost } from "@/app/page";
-import userModel from "@/models/user.Model";
+import userModel, { IUserModel } from "@/models/user.Model";
 
 interface res {
   success: boolean;
@@ -214,5 +214,53 @@ export async function fetchPosts() {
       success: false,
       message: "Something went wrong!",
     };
+  }
+}
+
+export async function searchUserByName(name:string){
+  await dbConnect()
+  
+  try {
+    const user:IUserModel[] = await userModel.find({firstName:name})
+    return {
+      success:true,
+      message:"found",
+      user
+    }
+  } catch (error) {
+    return {
+      success:false,
+      message:"Something went wrong!",
+      user:null
+    }
+  }
+}
+
+export async function followUserAction(dbUserId:string){
+  await dbConnect()
+  const clerkUser = await currentUser()
+
+  try {
+    const currentDbUser:IUserModel = await userModel.findOne({clerkUserId:clerkUser?.id})
+    console.log(currentDbUser)
+    const var1 = await userModel.findByIdAndUpdate(currentDbUser._id,{
+      $push:{following:dbUserId}
+    })
+    console.log(var1)
+    const var2 = await userModel.findByIdAndUpdate(dbUserId,{
+      $push:{followers:currentDbUser._id}
+    })
+    console.log(var2)
+    return {
+      success:true,
+      message:"Followed"
+    }
+  } catch (error) {
+    console.log(error)
+    return{
+      success:true,
+      message:"Something went wrong!"
+    }
+    
   }
 }
